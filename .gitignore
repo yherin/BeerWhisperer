@@ -130,3 +130,6 @@ dmypy.json
 
 #html folder
 html/
+
+#word embeddings
+glove/
