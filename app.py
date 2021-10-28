@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, request
 import pickle
 import json
+import beer as bw
 
 app = Flask(__name__)
 model = pickle.load(open('dataframe/model_df.bin', 'rb'))
@@ -11,10 +12,8 @@ model = pickle.load(open('dataframe/model_df.bin', 'rb'))
 def hello_world():
     return "<p>Hello, World!</p>"
 
-@app.route("/beer/<id>")
-#just some junk for testing
-def get_beer_rec(id: str) -> str:
-    ret = {}
-    ret["beer"] = id
-    ret["recommendations"] = str(list(model.index[:5]))
-    return json.dumps(ret)
+@app.route("/beer/<ean>")
+def get_beer_rec(ean: str) -> str:
+    t = request.args.get('taste', default=1.0, type = float)
+    p = request.args.get('price', default=1.0, type = float)
+    return bw.get_recommendations(ean=int(ean),  param_taste=t, param_price=p)
