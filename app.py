@@ -18,3 +18,8 @@ def get_beer_rec(ean: str) -> str:
     p = request.args.get('price', default=1.0, type = float)
     n = request.args.get('n', default=5, type=int)
     return bw.get_recommendations(ean=int(ean),  param_taste=t, param_price=p, n=n)
+
+@app.route("/beers")
+def get_all_beers():
+    return bw.get_all_beers()
+

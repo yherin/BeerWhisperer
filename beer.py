@@ -1,5 +1,4 @@
 from __future__ import annotations
-from re import T
 from typing import Tuple
 import pandas as pd
 import pickle
@@ -17,31 +16,26 @@ weights = {
     'foods': 0.15
 }
 
-ret_columns = ( 'Numero', 'EAN', 'Nimi', 'country_EN', 'taste_desc','avg_sim','weighted_avg', 'taste_sim', 'feel_sim', 'col_sim', 'country_sim', 'foods_sim', )#need to add Litrahinta and price sim too
-
+ret_columns_rec = ( 'Numero', 'EAN', 'Nimi', 'country_EN', 'taste_desc','avg_sim','weighted_avg', 'taste_sim', 'feel_sim', 'col_sim', 'country_sim', 'foods_sim', )#need to add Litrahinta and price sim too
+ret_columns = ( 'Numero', 'EAN', 'Nimi','Litrahinta', 'country_EN', 'taste_desc')
 
 def get_beer(ean: int):
     beers = pickle.load(open('dataframe/model_df_v2.bin', 'rb'))
     beer = beers.loc[beers['EAN'] == ean]
-    #Drop unnecessary columns TODO
-    #beers.drop(columns=[''])
 
-    output = beer.to_json(orient = "table")
+    output = beer.loc[:,ret_columns].to_json(orient='records')
     return output
 
 
 def get_all_beers():
     beers = pickle.load(open('dataframe/model_df_v2.bin', 'rb'))
-    #Drop unnecessary columns TODO
-    #beers.drop(columns=[''])
-    output = beers.to_json(orient = "table")
+    output = beers.loc[:,ret_columns].to_json(orient='records')
     return output
 
 
 def get_recommendations(ean: int, param_taste: float = 1.0, param_price: float = 1.0, n: int = 10):
     #Get recommendations by product EAN, options (non-important 0.5, neutral 1, important 1.5) that will effect the vectors
     beers = pickle.load(open('dataframe/model_df_v2.bin', 'rb'))
-    
 
     #foodVector to be added
     selectedBeer = beers[beers['EAN'] == ean]
@@ -97,7 +91,7 @@ def get_recommendations(ean: int, param_taste: float = 1.0, param_price: float =
 #    sorted_avg.reverse()
 
     compareBeers = compareBeers.sort_values(by=['weighted_avg', 'taste_sim'], ascending=False).reset_index(drop=True)
-    return compareBeers.loc[1:n,ret_columns].to_json(orient='records', indent=4) #beer at index 0 is always the beer we are matching against, so 1:n
+    return compareBeers.loc[1:n,ret_columns_rec].to_json(orient='records', indent=4) #beer at index 0 is always the beer we are matching against, so 1:n
     
     #AVG scores ARE NOT within 0 to 1 range, but other scores are. Recommended to give "Top 10" and for each
     #Rank X
@@ -124,7 +118,7 @@ def get_random():
     beers = pickle.load(open('dataframe/model_df_v2.bin', 'rb'))
     #Drop unnecessary columns TODO
     #beers.drop(columns=[''])
-    random = beers.sample().to_json
+    random = beers.sample().loc[:,ret_columns].to_json(orient='records')
     return random
 
 
