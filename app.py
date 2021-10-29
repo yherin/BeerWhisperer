@@ -16,4 +16,5 @@ def hello_world():
 def get_beer_rec(ean: str) -> str:
     t = request.args.get('taste', default=1.0, type = float)
     p = request.args.get('price', default=1.0, type = float)
-    return bw.get_recommendations(ean=int(ean),  param_taste=t, param_price=p)
+    n = request.args.get('n', default=5, type=int)
+    return bw.get_recommendations(ean=int(ean),  param_taste=t, param_price=p, n=n)

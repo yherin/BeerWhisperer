@@ -5,18 +5,12 @@ import pickle
 import numpy as np
 from scipy import spatial
 import sklearn as skl
-import os
-import json
-import fasttext
-import fasttext.util
-import string
-import math
 
 weights = {
     'taste': 0.6,
-    'color': 0.05,
-    'price': 0.1,
-    'feel': 0.05,
+    'color': 0.1,
+    #'price': 0.1,
+    'feel': 0.1,
     'country': 0.05,
     'foods': 0.15
 }
@@ -55,20 +49,27 @@ def get_recommendations(ean: int, param_taste: float = 1.0, param_price: float =
     
     #foodVector to be added
     selectedBeer = beers[beers['EAN'] == ean]
-    groundVect_taste = selectedBeer.taste_vect.values[0] * weights['taste'] * param_taste
-    groundVect_color = selectedBeer.col_vect.values[0] * weights['color']
-    groundVect_feel = selectedBeer.feel_vect.values[0] * weights['feel']
-    groundVect_foods = selectedBeer.foods_vect.values[0] * weights['foods']
-    groundVect_country = selectedBeer.country_vect.values[0] * weights['country']
+    groundVect_taste = selectedBeer.taste_vect.values[0] #* weights['taste'] * param_taste
+    groundVect_color = selectedBeer.col_vect.values[0] #* weights['color']
+    groundVect_feel = selectedBeer.feel_vect.values[0] #* weights['feel']
+    groundVect_foods = selectedBeer.foods_vect.values[0] #* weights['foods']
+    groundVect_country = selectedBeer.country_vect.values[0] #* weights['country']
 
     """Currently the weights are applied before the vector similarity is calcuated. The effect of this is super small."""
     compareBeers = beers.loc[:,('Numero', 'Nimi', 'EAN', 'country_EN', 'taste_desc', 'taste_vect', 'col_vect', 'feel_vect', 'foods_vect')]
-    compareBeers['taste_sim']       =   beers.loc[:,('taste_vect')].apply(lambda x: cosine_sim(groundVect_taste, x * weights['taste']))
-    compareBeers['col_sim']         =   beers.loc[:,('col_vect')].apply(lambda x: cosine_sim(groundVect_color, x * weights['color']))
-    compareBeers['feel_sim']        =   beers.loc[:,('feel_vect')].apply(lambda x: cosine_sim(groundVect_feel, x * weights['feel']))
-    compareBeers['foods_sim']     =   beers.loc[:,('foods_vect')].apply(lambda x: cosine_sim(groundVect_foods, x * weights['foods']))
-    compareBeers['country_sim']   =   beers.loc[:,('country_vect')].apply(lambda x: cosine_sim(groundVect_country, x * weights['country']))
-    compareBeers['weighted_avg']             =   compareBeers[['taste_sim', 'col_sim', 'feel_sim', 'foods_sim', 'country_sim']].mean(axis=1)
+    compareBeers['taste_sim']       =   beers.loc[:,('taste_vect')].apply(lambda x: cosine_sim(groundVect_taste, x))
+    compareBeers['col_sim']         =   beers.loc[:,('col_vect')].apply(lambda x: cosine_sim(groundVect_color, x))
+    compareBeers['feel_sim']        =   beers.loc[:,('feel_vect')].apply(lambda x: cosine_sim(groundVect_feel, x))
+    compareBeers['foods_sim']     =   beers.loc[:,('foods_vect')].apply(lambda x: cosine_sim(groundVect_foods, x))
+    compareBeers['country_sim']   =   beers.loc[:,('country_vect')].apply(lambda x: cosine_sim(groundVect_country, x))
+    
+    compareBeers['taste_sim_W'] = compareBeers['taste_sim'] * weights['taste']
+    compareBeers['col_sim_W'] = compareBeers['col_sim'] * weights['color']
+    compareBeers['feel_sim_W'] = compareBeers['feel_sim'] * weights['feel']
+    compareBeers['foods_sim_W'] = compareBeers['foods_sim'] * weights['foods']
+    compareBeers['country_sim_W'] = compareBeers['country_sim'] * weights['country']
+
+    compareBeers['weighted_avg']             =   compareBeers[['taste_sim_W', 'col_sim_W', 'feel_sim_W', 'foods_sim_W', 'country_sim_W']].sum(axis=1)
 
 #    for b in beers.iterrows():
 #        compareVect_taste = b[1].taste_vect
@@ -91,8 +92,8 @@ def get_recommendations(ean: int, param_taste: float = 1.0, param_price: float =
 #    sorted_avg = sorted(scores_avg.items(), key=lambda item: item[1])
 #    sorted_avg.reverse()
 
-    compareBeers = compareBeers.sort_values(by=['weighted_avg', 'taste_sim'], ascending=False)
-    return compareBeers.loc[1:n, ret_columns].to_json(orient='records', indent=4) #beer at index 0 is always the beer we are matching against, so 1:n
+    compareBeers = compareBeers.sort_values(by=['weighted_avg', 'taste_sim'], ascending=False).reset_index(drop=True)
+    return compareBeers.loc[1:n,ret_columns].to_json(orient='records', indent=4) #beer at index 0 is always the beer we are matching against, so 1:n
     
     #AVG scores ARE NOT within 0 to 1 range, but other scores are. Recommended to give "Top 10" and for each
     #Rank X
