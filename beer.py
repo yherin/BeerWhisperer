@@ -46,7 +46,7 @@ def get_recommendations(ean: int, param_taste: float = 1.0, param_price: float =
     groundVect_country = selectedBeer.country_vect.values[0] #* weights['country']
 
     """Currently the weights are applied before the vector similarity is calcuated. The effect of this is super small."""
-    compareBeers = beers.loc[:,('Numero', 'Nimi', 'EAN', 'country_EN', 'taste_desc', 'taste_vect', 'col_vect', 'feel_vect', 'foods_vect')]
+    compareBeers = beers.loc[:,('Numero', 'name', 'litre_price', 'EAN', 'country_EN', 'taste_desc', 'taste_vect', 'col_vect', 'feel_vect', 'foods_vect')]
     compareBeers['taste_sim']       =   beers.loc[:,('taste_vect')].apply(lambda x: cosine_sim(groundVect_taste, x))
     compareBeers['col_sim']         =   beers.loc[:,('col_vect')].apply(lambda x: cosine_sim(groundVect_color, x))
     compareBeers['feel_sim']        =   beers.loc[:,('feel_vect')].apply(lambda x: cosine_sim(groundVect_feel, x))
