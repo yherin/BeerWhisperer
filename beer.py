@@ -16,8 +16,8 @@ weights = {
     'foods': 0.15
 }
 
-ret_columns_rec = ( 'Numero', 'EAN', 'Nimi', 'country_EN', 'taste_desc','avg_sim','weighted_avg', 'taste_sim', 'feel_sim', 'col_sim', 'country_sim', 'foods_sim', )#need to add Litrahinta and price sim too
-ret_columns = ( 'Numero', 'EAN', 'Nimi','Litrahinta', 'country_EN', 'taste_desc')
+ret_columns_rec = ( 'Numero', 'EAN', 'name', 'country_EN', 'taste_desc','avg_sim','weighted_avg', 'taste_sim', 'feel_sim', 'col_sim', 'country_sim', 'foods_sim', 'litre_price' )#need to add Litrahinta and price sim too
+ret_columns = ( 'Numero', 'EAN', 'name','litre_price', 'country_EN', 'taste_desc')
 
 def get_beer(ean: int):
     beers = pickle.load(open('dataframe/model_df_v2.bin', 'rb'))
@@ -124,6 +124,9 @@ def get_random():
 
 def cosine_sim(a,b):
     return 1 - spatial.distance.cosine(a,b)
+
+def similarity(a,b):
+    return 1-(abs(a-b))
 
 #get_all_beers()
 #print(get_beer(5425007658859))
