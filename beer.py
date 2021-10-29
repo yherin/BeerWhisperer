@@ -1,21 +1,23 @@
 from __future__ import annotations
+from re import T
 from typing import Tuple
 import pandas as pd
 import pickle
 import numpy as np
 from scipy import spatial
-import sklearn as skl
+#import sklearn as skl
+
 
 weights = {
-    'taste': 0.6,
-    'color': 0.1,
+    'taste': 0.4,
+    'color': 0.2,
     #'price': 0.1,
-    'feel': 0.1,
+    'feel': 0.2,
     'country': 0.05,
     'foods': 0.15
 }
 
-ret_columns = ( 'Numero', 'EAN', 'Nimi', 'country_EN', 'taste_desc', 'weighted_avg', 'taste_sim', )#need to add Litrahinta and price sim too
+ret_columns = ( 'Numero', 'EAN', 'Nimi', 'country_EN', 'taste_desc','avg_sim','weighted_avg', 'taste_sim', 'feel_sim', 'col_sim', 'country_sim', 'foods_sim', )#need to add Litrahinta and price sim too
 
 
 def get_beer(ean: int):
@@ -37,16 +39,10 @@ def get_all_beers():
 
 
 def get_recommendations(ean: int, param_taste: float = 1.0, param_price: float = 1.0, n: int = 10):
-    #Get recommendations by product EAN, 3 options (non-important, neutral, important) that will effect the vectors
+    #Get recommendations by product EAN, options (non-important 0.5, neutral 1, important 1.5) that will effect the vectors
     beers = pickle.load(open('dataframe/model_df_v2.bin', 'rb'))
     
-    scores_taste = {}
-    scores_feel = {}
-    scores_color = {}
-    scores_avg = {}
-    errors = 0
-    success = 0
-    
+
     #foodVector to be added
     selectedBeer = beers[beers['EAN'] == ean]
     groundVect_taste = selectedBeer.taste_vect.values[0] #* weights['taste'] * param_taste
@@ -62,14 +58,22 @@ def get_recommendations(ean: int, param_taste: float = 1.0, param_price: float =
     compareBeers['feel_sim']        =   beers.loc[:,('feel_vect')].apply(lambda x: cosine_sim(groundVect_feel, x))
     compareBeers['foods_sim']     =   beers.loc[:,('foods_vect')].apply(lambda x: cosine_sim(groundVect_foods, x))
     compareBeers['country_sim']   =   beers.loc[:,('country_vect')].apply(lambda x: cosine_sim(groundVect_country, x))
+    compareBeers['avg_sim'] = compareBeers[['taste_sim', 'col_sim', 'feel_sim', 'foods_sim']].sum(axis=1)/4
     
-    compareBeers['taste_sim_W'] = compareBeers['taste_sim'] * weights['taste']
-    compareBeers['col_sim_W'] = compareBeers['col_sim'] * weights['color']
-    compareBeers['feel_sim_W'] = compareBeers['feel_sim'] * weights['feel']
-    compareBeers['foods_sim_W'] = compareBeers['foods_sim'] * weights['foods']
-    compareBeers['country_sim_W'] = compareBeers['country_sim'] * weights['country']
+    if param_taste != 1:
+        temp = weights['taste']
+        weights['taste'] = weights['taste']*param_taste
+        temp = weights['taste'] - temp
+        weights['feel'] = weights['feel'] - temp/3
+        weights['color'] = weights['color']- temp/3
+        weights['foods'] = weights['foods']- temp/3
 
-    compareBeers['weighted_avg']             =   compareBeers[['taste_sim_W', 'col_sim_W', 'feel_sim_W', 'foods_sim_W', 'country_sim_W']].sum(axis=1)
+    compareBeers['taste_sim_W'] = compareBeers['taste_sim'] * weights['taste'] #* param_taste
+    compareBeers['col_sim_W'] = compareBeers['col_sim'] * weights['color'] #/param_taste
+    compareBeers['feel_sim_W'] = compareBeers['feel_sim'] * weights['feel'] #* param_taste
+    compareBeers['foods_sim_W'] = compareBeers['foods_sim'] * weights['foods'] #/param_taste
+    compareBeers['country_sim_W'] = compareBeers['country_sim'] * weights['country']
+    compareBeers['weighted_avg'] =   compareBeers[['taste_sim_W', 'col_sim_W', 'feel_sim_W', 'foods_sim_W', 'country_sim_W']].sum(axis=1)
 
 #    for b in beers.iterrows():
 #        compareVect_taste = b[1].taste_vect
