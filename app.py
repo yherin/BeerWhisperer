@@ -1,7 +1,12 @@
+from os import system
 from flask import Flask, request
 import pickle
 import json
+
+from werkzeug.utils import redirect
 import beer as bw
+import ean_scanner as cam
+import cv2
 
 app = Flask(__name__)
 model = pickle.load(open('dataframe/model_df.bin', 'rb'))
@@ -22,4 +27,9 @@ def get_beer_rec(ean: str) -> str:
 @app.route("/beers")
 def get_all_beers():
     return bw.get_all_beers()
+
+@app.route("/scan")
+def scan_ean():
+    ean = cam.scan()
+    return redirect("/beer/"+ean, code=302)
 
