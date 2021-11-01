@@ -1,5 +1,6 @@
 from os import system
 from flask import Flask, request
+from flask_cors import CORS
 import pickle
 import json
 
@@ -8,7 +9,7 @@ import beer as bw
 #import ean_scanner as cam
 
 beerwhisperer = Flask(__name__)
-
+CORS(beerwhisperer)
 
 @beerwhisperer.route("/")
 def hello_world():
@@ -27,6 +28,7 @@ def get_all_beers():
 
 @beerwhisperer.route("/scan")
 def scan_ean():
-    ean = cam.scan()
-    return redirect("/beer/"+ean, code=302)
+    #ean = cam.scan()
+    #return redirect("/beer/"+ean, code=302)
+    return "Not implemented"
 
