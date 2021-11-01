@@ -12,4 +12,4 @@ ENV PATH $PATH:$HOME/.local/bin
 RUN pip install pipenv --user
 
 
-CMD gunicorn -b 0.0.0.0:8000 -w 4 app:beerwhisperer
+CMD gunicorn -b 0.0.0.0:$PORT -w 4 app:beerwhisperer
