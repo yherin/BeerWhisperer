@@ -1,137 +1,20 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: linux-64
-_libgcc_mutex=0.1=conda_forge
-_openmp_mutex=4.5=1_llvm
-alsa-lib=1.2.3=h516909a_0
-aom=3.2.0=h9c3ff4c_2
-blas=1.0=mkl
-bottleneck=1.3.2=py38heb32a55_1
-bzip2=1.0.8=h7f98852_4
-c-ares=1.18.1=h7f98852_0
-ca-certificates=2021.10.8=ha878542_0
-cairo=1.16.0=h6cf1ce9_1008
-certifi=2021.10.8=py38h578d9bd_0
-click=8.0.3=pyhd3eb1b0_0
-dataclasses=0.8=pyh6d0b6a4_7
-dbus=1.13.6=h48d8840_2
-expat=2.4.1=h9c3ff4c_0
-ffmpeg=4.4.0=h6987444_5
-flask=2.0.2=pyhd3eb1b0_0
-fontconfig=2.13.1=hba837de_1005
-freetype=2.10.4=h0708190_1
-gettext=0.19.8.1=h73d1719_1008
-glib=2.70.0=h780b84a_1
-glib-tools=2.70.0=h780b84a_1
-gmp=6.2.1=h58526e2_0
-gnutls=3.6.13=h85f3911_1
-graphite2=1.3.13=h58526e2_1001
-gst-plugins-base=1.18.5=hf529b03_1
-gstreamer=1.18.5=h9f60fe5_1
-gunicorn=20.1.0=py38h578d9bd_0
-harfbuzz=2.9.1=h83ec7ef_1
-hdf5=1.10.6=nompi_h7c3c948_1111
-icu=68.2=h9c3ff4c_0
-intel-openmp=2021.3.0=h06a4308_3350
-itsdangerous=2.0.1=pyhd3eb1b0_0
-jasper=1.900.1=h07fcdf6_1006
-jbig=2.1=h7f98852_2003
-jinja2=3.0.1=pyhd3eb1b0_0
-jpeg=9d=h36c2ea0_0
-krb5=1.19.2=hcc1bbae_2
-lame=3.100=h7f98852_1001
-ld_impl_linux-64=2.35.1=h7274673_9
-lerc=3.0=h9c3ff4c_0
-libblas=3.9.0=11_linux64_mkl
-libcblas=3.9.0=11_linux64_mkl
-libclang=11.1.0=default_ha53f305_1
-libcurl=7.79.1=h2574ce0_1
-libdeflate=1.8=h7f98852_0
-libedit=3.1.20191231=he28a2e2_2
-libev=4.33=h516909a_1
-libevent=2.1.10=h9b69904_4
-libffi=3.4.2=h9c3ff4c_4
-libgcc-ng=11.2.0=h1d223b6_11
-libgfortran-ng=7.5.0=ha8ba4b0_17
-libgfortran4=7.5.0=ha8ba4b0_17
-libglib=2.70.0=h174f98d_1
-libiconv=1.16=h516909a_0
-libjpeg-turbo=2.1.1=h7f98852_0
-liblapack=3.9.0=11_linux64_mkl
-liblapacke=3.9.0=11_linux64_mkl
-libllvm11=11.1.0=hf817b99_2
-libnghttp2=1.43.0=h812cca2_1
-libnsl=2.0.0=h7f98852_0
-libogg=1.3.4=h7f98852_1
-libopencv=4.5.3=py38h5627943_1
-libopus=1.3.1=h7f98852_1
-libpng=1.6.37=h21135ba_2
-libpq=13.3=hd57d9b9_1
-libprotobuf=3.16.0=h780b84a_0
-libssh2=1.10.0=ha56f1ee_2
-libstdcxx-ng=11.2.0=he4da1e4_11
-libtiff=4.3.0=h6f004c6_2
-libuuid=2.32.1=h7f98852_1000
-libvorbis=1.3.7=h9c3ff4c_0
-libvpx=1.11.0=h9c3ff4c_3
-libwebp-base=1.2.1=h7f98852_0
-libxcb=1.13=h7f98852_1003
-libxkbcommon=1.0.3=he3ba5ed_0
-libxml2=2.9.12=h72842e0_0
-libzlib=1.2.11=h36c2ea0_1013
-llvm-openmp=12.0.1=h4bd325d_1
-lz4-c=1.9.3=h9c3ff4c_1
-markupsafe=2.0.1=py38h27cfd23_0
-mkl=2021.3.0=h06a4308_520
-mkl-service=2.4.0=py38h7f8727e_0
-mkl_fft=1.3.1=py38hd3c417c_0
-mkl_random=1.2.2=py38h51133e4_0
-mysql-common=8.0.27=ha770c72_1
-mysql-libs=8.0.27=hfa10184_1
-ncurses=6.2=he6710b0_1
-nettle=3.6=he412f7d_0
-nspr=4.32=h9c3ff4c_0
-nss=3.71=hb5efdd6_0
-numexpr=2.7.3=py38h22e1b3c_1
-numpy=1.21.2=py38h20f2e39_0
-numpy-base=1.21.2=py38h79a1101_0
-opencv=4.5.3=py38h578d9bd_1
-openh264=2.1.1=h780b84a_0
-openssl=1.1.1l=h7f98852_0
-pandas=1.3.3=py38h8c16a72_0
-pcre=8.45=h9c3ff4c_0
-pip=21.2.4=py38h06a4308_0
-pixman=0.40.0=h36c2ea0_0
-pthread-stubs=0.4=h36c2ea0_1001
-py-opencv=4.5.3=py38he5a9106_1
-python=3.8.12=hb7a2778_2_cpython
-python-dateutil=2.8.2=pyhd3eb1b0_0
-python_abi=3.8=2_cp38
-pytz=2021.3=pyhd3eb1b0_0
-pyzbar=0.1.8=pyhd8ed1ab_1
-qt=5.12.9=hda022c4_4
-readline=8.1=h27cfd23_0
-scipy=1.7.1=py38h292c36d_2
-setuptools=58.0.4=py38h06a4308_0
-six=1.16.0=pyhd3eb1b0_0
-sqlite=3.36.0=hc218d9a_0
-tk=8.6.11=h1ccaba5_0
-werkzeug=2.0.1=pyhd8ed1ab_0
-wheel=0.37.0=pyhd3eb1b0_1
-x264=1!161.3030=h7f98852_1
-x265=3.5=h4bd325d_1
-xorg-kbproto=1.0.7=h7f98852_1002
-xorg-libice=1.0.10=h7f98852_0
-xorg-libsm=1.2.3=hd9c2040_1000
-xorg-libx11=1.7.2=h7f98852_0
-xorg-libxau=1.0.9=h7f98852_0
-xorg-libxdmcp=1.1.3=h7f98852_0
-xorg-libxext=1.3.4=h7f98852_1
-xorg-libxrender=0.9.10=h7f98852_1003
-xorg-renderproto=0.11.1=h7f98852_1002
-xorg-xextproto=7.3.0=h7f98852_1002
-xorg-xproto=7.0.31=h7f98852_1007
-xz=5.2.5=h7b6447c_0
-zbar=0.10=hf484d3e_1000
-zlib=1.2.11=h36c2ea0_1013
-zstd=1.5.0=ha95c52a_0
+Bottleneck==1.3.2
+certifi==2021.10.8
+click==8.0.3
+Flask @ file:///tmp/build/80754af9/flask_1634118196080/work
+gunicorn @ file:///home/conda/feedstock_root/build_artifacts/gunicorn_1620734326877/work
+itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
+Jinja2 @ file:///tmp/build/80754af9/jinja2_1624781299557/work
+MarkupSafe @ file:///tmp/build/80754af9/markupsafe_1621528148836/work
+mkl-fft==1.3.1
+mkl-random @ file:///tmp/build/80754af9/mkl_random_1626186064646/work
+mkl-service==2.4.0
+numexpr @ file:///tmp/build/80754af9/numexpr_1618856167419/work
+numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1634095647912/work
+pandas==1.3.3
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+pytz==2021.3
+pyzbar @ file:///home/conda/feedstock_root/build_artifacts/pyzbar_1629133033434/work/dist
+scipy @ file:///tmp/build/80754af9/scipy_1630606796110/work
+six @ file:///tmp/build/80754af9/six_1623709665295/work
+Werkzeug @ file:///home/conda/feedstock_root/build_artifacts/werkzeug_1621518206714/work
