@@ -27,8 +27,9 @@ def scan():
     while True:
         ret, frame = cap.read()
         i = decoder(frame)
-        cv2.imshow('EAN scanner', frame)
-        code = cv2.waitKey(10)
+        #cv2.imshow('EAN scanner', frame)
+        #code = cv2.waitKey(10)
+        print(i)
         if i != 00000000000:
             break
     return i
