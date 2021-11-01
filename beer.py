@@ -2,9 +2,7 @@ from __future__ import annotations
 from typing import Tuple
 import pandas as pd
 import pickle
-import numpy as np
 from scipy import spatial
-#import sklearn as skl
 
 ret_columns_rec = ('Numero', 'EAN', 'name', 'country_EN', 'taste_desc', 'avg_sim', 'weighted_avg', 'taste_sim',
                    'feel_sim', 'col_sim', 'country_sim', 'foods_sim', 'litre_price') 
