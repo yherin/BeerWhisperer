@@ -5,7 +5,7 @@ import json
 
 from werkzeug.utils import redirect
 import beer as bw
-import ean_scanner as cam
+#import ean_scanner as cam
 
 beerwhisperer = Flask(__name__)
 

@@ -1,8 +1,7 @@
 FROM python:3.8.12-slim-buster
 
 COPY ./requirements.txt /bw-app/requirements.txt
-WORKDIR /bw-app
-RUN apt-get -y update && apt-get install -y libzbar-dev ffmpeg libsm6 libxext6 
+WORKDIR /bw-app 
 RUN pip install --upgrade pip setuptools wheel
 RUN pip install -r requirements.txt
 COPY . /bw-app
